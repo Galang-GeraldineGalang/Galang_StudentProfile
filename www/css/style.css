@@ -1,0 +1,94 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+body {
+    background-color: #121212;
+    color: #e0e0e0;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 20px;
+    min-height: 100vh;
+}
+
+/* Force vertical column layout */
+.profile-container {
+    width: 100%;
+    max-width: 380px;
+    display: flex;
+    flex-direction: column; /* This prevents elements from going side-by-side */
+    gap: 16px;
+}
+
+/* Header Card (Red Background) */
+.profile-header {
+    background-color: #8b0000;
+    border-radius: 16px;
+    padding: 24px;
+    text-align: center;
+    color: #ffffff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+}
+
+.profile-avatar {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    object-fit: cover;
+    display: block;
+    margin: 0 auto 16px auto;
+    border: 3px solid #ffffff;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.profile-header h1 {
+    font-size: 20px;
+    margin-bottom: 4px;
+    font-weight: bold;
+    color: #ffffff;
+}
+
+.subtitle {
+    font-size: 14px;
+    color: #f0f0f0;
+    margin-bottom: 16px;
+}
+
+.nav-links {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    font-size: 14px;
+    color: #f0f0f0;
+    font-weight: 500;
+}
+
+/* Info Cards (Black Background) */
+.info-card {
+    background-color: #1e1e1e;
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.info-card h2 {
+    color: #ffffff;
+    font-size: 18px;
+    margin-bottom: 12px;
+    font-weight: bold;
+}
+
+.info-text p {
+    font-size: 14px;
+    line-height: 1.6;
+    color: #cccccc;
+    margin-bottom: 12px;
+}
+
+.info-text p:last-child {
+    margin-bottom: 0;
+}
