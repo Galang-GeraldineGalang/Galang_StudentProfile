@@ -1,92 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Geraldine Galang - Student Profile</title>
-    <link rel="stylesheet" href="css/style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Geraldine Galang - Profile</title>
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
-    <div class="profile-container">
-        <header class="profile-header">
-            <img src="img/pfp.jpg" alt="Profile picture of Geraldine yeahyeah" class="profile-avatar">
-            <h1>Geraldine Galang</h1>
-            <p class="subtitle">Information Technology Student | Cybersecurity  </p>
-            
-            <nav class="nav-menu" aria-label="Main Navigation">
-                <a href="#about" class="nav-link">About</a>
-                <a href="#skills" class="nav-link">Skills</a>
-            </nav>
-        </header>
 
-        <main class="main-content">
-    
-            <section id="about" class="info-card">
-                <h2>About Myself</h2>
-                <div class="info-text">
-                    <p>I am an Information Technology student at Xavier University - Ateneo de Cagayan with a burning interest in networking, and cybersecurity. My academic journey focuses on understanding system architecture while doing my best creating functional, aesthetically clean applications.</p>
-                    
-                    <p>Outside of technical development, I am deeply interested in network forensics, system development, and cybersecurity. I constantly push myself to learn new tools especially in UI/UX, build practical desktop and web solutions, and refine my problem-solving skills.</p>
-                </div>
+  <nav class="navbar">
+    <a href="index.html" class="nav-link active">Home</a>
+    <a href="about.html" class="nav-link">About</a>
+    <a href="skills.html" class="nav-link">Skills</a>
+    <a href="projects.html" class="nav-link">Projects</a>
+    <a href="contact.html" class="nav-link">Contact</a>
+  </nav>
 
-                <div class="about-details">
-                    <div class="detail-group">
-                        <h3>Interests</h3>
-                        <p>Networking, Cybersecurity & Forensics, Instruments, Sports, Online Games (Valorant, ML, etc.)</p>
-                    </div>
 
-                    <div class="detail-group">
-                        <h3>Educational Background</h3>
-                        <p>Humanities and Social Sciences — Liceo de Cagayan University</p>
-                        <p>BS Information Technology — Xavier University - Ateneo de Cagayan</p>
-                    
-                    </div>
+  <main class="container">
+    <section class="content-card hero-card">
+      <img src="img/pfp.jpg" alt="Geraldine" class="profile-img">
+      <h1>Geraldine Galang</h1>
+      <p class="tagline">Web & Systems Developer | Cybersecurity Enthusiast</p>
+      <p class="bio-short">
+        Welcome to my student profile app! I specialize in web systems, UI design, and desktop application development. Use the navigation above to explore my background, technical skill set, and past projects.
+      </p>
+      <div class="cta-buttons">
+        <a href="projects.html" class="btn">View My Work</a>
+        <a href="contact.html" class="btn btn-secondary">Get in Touch</a>
+      </div>
+    </section>
+  </main>
 
-                    <div class="detail-group">
-                        <h3>Goals & Aspirations</h3>
-                        <p>To master secure web application design, specialize in network security analysis, and perform well in cybersecurity field.</p>
-                    </div>
-                </div>
-            </section>
-
-            <section id="skills" class="info-card">
-                <h2>Skills & Expertise</h2>
-                <div class="skills-grid">
-                    <div class="skill-item">
-                        <h3>Python & PySide6</h3>
-                        <p>Building clean desktop management systems with custom graphical interfaces and event logic.</p>
-                    </div>
-                    
-                    <div class="skill-item">
-                        <h3>Java Development</h3>
-                        <p>Implementing foundational object-oriented programming concepts, data structures, and backend logic.</p>
-                    </div>
-
-                    <div class="skill-item">
-                        <h3>Web Technologies (HTML5 / CSS3)</h3>
-                        <p>Designing modern, responsive, and mobile-first layouts using semantic markup and CSS Grid/Flexbox.</p>
-                    </div>
-
-                    <div class="skill-item">
-                        <h3>Network Forensics & Analysis</h3>
-                        <p>Analyzing network traffic, inspecting packet captures (DNS/ICMP), and diagnosing network configuration issues.</p>
-                    </div>
-
-                    <div class="skill-item">
-                        <h3>UI/UX Layout & Prototyping</h3>
-                        <p>Structuring accessible web layouts with clear visual hierarchy, structured spacing, and minimalist design aesthetics.</p>
-                    </div>
-                </div>
-            </section>
-
-        </main>
-
-       
-        <footer class="profile-footer">
-            <p>&copy; 2026 Geraldine Galang. All rights reserved.</p>
-        </footer>
-    </div>
-
+  <script src="cordova.js"></script>
 </body>
 </html>
