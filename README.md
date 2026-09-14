@@ -1,50 +1,79 @@
-# Student Profile Application — Activity 4 (Multi-Page Cordova App)
+# Student Profile Cordova Application
 
-**Developer:** Geraldine Galang
-**Course:** Mobile Development  
-**Repository:** `Galang_StudentProfile`
+A hybrid mobile application built using **Apache Cordova**, **HTML5**, **CSS3**, and **vanilla JavaScript**. This application displays student profile information and allows dynamic profile editing with client-side validation and persistent storage using `localStorage`.
 
 ---
 
 ## 1. Project Description
-This project is an extended multi-page hybrid mobile application built using HTML5, CSS3, and Apache Cordova. Expanded from the single-page layout in Activity 3, this application breaks down developer information into five dedicated screens with a consistent visual identity, accessible controls, and fully responsive layouts across mobile, tablet, and desktop screens.
+The **Student Profile Application** serves as a digital portfolio for students to display their academic details, personal background, technical skill sets, completed projects, and contact channels. Developed as part of academic coursework, the app emphasizes modular structure, dynamic DOM manipulation using JavaScript, client-side data persistence, and mobile responsiveness.
 
 ---
 
-## 2. Application Pages
-* **Profile (`index.html`):** Homepage serving as the main entryway. Features profile picture, name, tagline, introductory bio, and primary CTAs.
-* **About (`about.html`):** Detailed background covering personal biography, academic credentials at Xavier University - Ateneo de Cagayan, and long-term career goals.
-* **Skills (`skills.html`):** Itemized breakdown of technical proficiencies categorized under Web Development, Systems & Programming, and Networking/Databases.
-* **Projects (`projects.html`):** Portfolio showcase displaying case studies (Cafe Management System, VCMS, and Mobile Student Profile) with project descriptions, developer roles, and tech stacks.
-* **Contact (`contact.html`):** Contact information, GitHub profile link, institutional email, and a structured contact form layout.
+## 2. Application Pages & Sections
+The application consists of five main interactive pages/sections:
+
+* **Profile:** Displays core identity information including Full Name, Course, Year Level, profile photo, and an action button to toggle the Edit Profile interface.
+* **About:** Contains a detailed personal description, background, academic goals, and hobbies.
+* **Skills:** Showcases technical and soft skills rendered dynamically from stored profile data.
+* **Projects:** Features previous technical projects, case studies, and application highlights with descriptions and links.
+* **Contact:** Provides communication channels such as institutional email, social media links, location, and a contact form interface.
 
 ---
 
-## 3. Navigation Implementation
-Navigation is implemented strictly using pure HTML standard hyperlinks (`<a href="...">`) without JavaScript loading mechanisms:
-* A sticky top navigation bar (`<nav class="navbar">`) is present on all 5 HTML pages.
-* Direct relative links allow immediate movement between any screen (e.g., `Profile → About → Skills → Projects → Contact` and back).
-* Visual feedback is provided by styling the `.active` class on the link corresponding to the current page.
+## 3. Profile Editing
+The **Edit Profile** feature allows users to dynamically update their profile details without modifying source code.
+
+* **Editable Fields:**
+  * Full Name
+  * Course / Academic Program
+  * Year Level
+  * About Me Description
+  * Skills List (entered as comma-separated values)
+
+When the user selects **Edit Profile**, the application toggles from the display interface to an interactive editing form pre-filled with the current profile data.
 
 ---
 
-## 4. Responsive Design
-Responsiveness is retained from Activity 3 and applied globally across all 5 pages:
-* **CSS Grid & Flexbox:** Page content automatically reflows based on available width.
-* **Fluid Images:** Images use `width: 100%` and `object-fit: cover` to avoid stretching or overflow.
-* **Mobile Viewports (`max-width: 768px`):** The navigation bar wraps cleanly, buttons stack vertically, and multi-column grids collapse into a single vertical column to eliminate horizontal scrolling.
+## 4. JavaScript Functionality
+JavaScript drives all dynamic operations in the app:
+
+* **Form Handling:** Captures input events, prevents default browser page reloads upon submission, and extracts field values.
+* **Validation:** Enforces input constraints before saving data. Ensures required fields (Full Name, Course, Year Level, About Me) are non-empty and alerts the user if any required data is missing.
+* **Profile Updates:** Reads verified inputs, updates the internal profile state object, and immediately re-renders DOM elements in the View section.
+* **Save Functionality:** Validates inputs, saves the updated payload to `localStorage`, renders the refreshed UI, and exits Edit Mode.
+* **Cancel Functionality:** Discards uncommitted changes, re-populates the form with the last saved state, and closes the Edit Mode without modifying existing data.
 
 ---
 
-## 5. UI/UX Principles Applied (Module 4)
-* **Consistency:** Unified color palette (Maroon `#800020`, neutral gray backgrounds), identical header hierarchy, and matching card structures.
-* **Visual Hierarchy:** Distinct headings (`h1`, `h2`), bolded sub-labels, and elevated background cards separate primary details from body text.
-* **Accessibility:** High text contrast ratios, standard focus states, explicit `alt` tags on all images, and semantic HTML structure (`<main>`, `<nav>`, `<header>`, `<article>`).
+## 5. Local Data Storage
+The application utilizes the browser/WebView **`localStorage` API** to ensure data persistence:
+
+* **Data Format:** Profile data is stored as a serialized JSON string under the key `'studentProfile'`.
+* **Startup Retrieval:** When the Cordova app launches, JavaScript retrieves and parses `'studentProfile'`.
+* **Default Fallback:** If no data exists in `localStorage` (e.g., first-time app launch), the application initializes and saves default profile information automatically.
+* **Persistence:** Changes persist even after closing and reopening the application.
 
 ---
 
-## 6. How to Build & Run
+## 6. Responsive Design
+The application employs flexible CSS layouts to deliver a uniform user experience across various screen sizes:
+
+* **Desktop:** Utilizes multi-column grid layouts, wider form containers, and enhanced spacing.
+* **Tablet:** Adapts navigation menus and side-by-side elements into flexible stacked grid items.
+* **Mobile (Cordova Target):** Uses single-column flexbox layouts, touch-friendly touch targets/buttons, fluid media queries, and responsive viewport settings.
+
+---
+
+## 7. How to Run
+Follow these steps to set up, build, and run the Apache Cordova application locally:
+
+### Prerequisites
+* [Node.js](https://nodejs.org/) installed
+* [Apache Cordova CLI](https://cordova.apache.org/) installed globally (`npm install -g cordova`)
+* Android Studio (for Android build/emulator)
+
+### Steps
 1. **Clone the Repository:**
    ```bash
-   git clone [https://github.com/Galang-GeraldineGalang/Galang_StudentProfile.git](https://github.com/Galang-GeraldineGalang/Galang_StudentProfile.git)
-   cd Galang_StudentProfile
+   git clone [https://github.com/YourUsername/Cailing_StudentProfile.git](https://github.com/YourUsername/Cailing_StudentProfile.git)
+   cd Cailing_StudentProfile

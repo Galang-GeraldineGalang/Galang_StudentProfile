@@ -1,38 +1,123 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Geraldine Galang - Profile</title>
-  <link rel="stylesheet" href="css/style.css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="initial-scale=1, width=device-width, viewport-fit=cover">
+  <title>Student Profile</title>
+  <link rel="stylesheet" href="css/index.css">
 </head>
 <body>
 
-
+  <!-- NAVBAR -->
   <nav class="navbar">
-    <a href="index.html" class="nav-link active">Home</a>
-    <a href="about.html" class="nav-link">About</a>
-    <a href="skills.html" class="nav-link">Skills</a>
-    <a href="projects.html" class="nav-link">Projects</a>
-    <a href="contact.html" class="nav-link">Contact</a>
+    <div class="nav-brand">Student Profile</div>
+    <ul class="nav-links">
+      <li><a href="#profile-section" class="active">Profile</a></li>
+      <li><a href="#about-section">About</a></li>
+      <li><a href="#skills-section">Skills</a></li>
+      <li><a href="#projects-section">Projects</a></li>
+      <li><a href="#contact-section">Contact</a></li>
+    </ul>
   </nav>
 
-
   <main class="container">
-    <section class="content-card hero-card">
-      <img src="img/pfp.jpg" alt="Geraldine" class="profile-img">
-      <h1>Geraldine Galang</h1>
-      <p class="tagline">Web & Systems Developer | Cybersecurity Enthusiast</p>
-      <p class="bio-short">
-        Welcome to my student profile app! I specialize in web systems, UI design, and desktop application development. Use the navigation above to explore my background, technical skill set, and past projects.
-      </p>
-      <div class="cta-buttons">
-        <a href="projects.html" class="btn">View My Work</a>
-        <a href="contact.html" class="btn btn-secondary">Get in Touch</a>
+
+    <!-- 1. PROFILE SECTION -->
+    <section id="profile-section" class="card">
+      
+      <!-- VIEW MODE -->
+      <div id="profile-view">
+        <div class="profile-header">
+          <h2 id="display-fullname">Geraldine Galang</h2>
+          <p class="subtitle">
+            <span id="display-course">BS Information Technology</span> - 
+            <span id="display-year">3rd Year</span>
+          </p>
+        </div>
+
+        <div class="profile-body">
+          <h3>About Me</h3>
+          <p id="display-about">Student at Xavier University - Ateneo de Cagayan with a focus on web technologies, coding, and networking.</p>
+
+          <h3>Skills</h3>
+          <ul id="display-skills" class="skills-list">
+            <!-- Rendered dynamically -->
+          </ul>
+        </div>
+
+        <button id="btn-edit" type="button" class="btn primary">Edit Profile</button>
       </div>
+
+      <!-- EDIT MODE (Naka-hide via .hidden class) -->
+      <div id="profile-edit" class="hidden">
+        <h2>Edit Profile Information</h2>
+        
+        <form id="form-edit-profile">
+          <div class="form-group">
+            <label for="input-fullname">Full Name *</label>
+            <input type="text" id="input-fullname" placeholder="Enter full name">
+          </div>
+
+          <div class="form-group">
+            <label for="input-course">Course *</label>
+            <input type="text" id="input-course" placeholder="Enter course">
+          </div>
+
+          <div class="form-group">
+            <label for="input-year">Year Level *</label>
+            <input type="text" id="input-year" placeholder="Enter year level">
+          </div>
+
+          <div class="form-group">
+            <label for="input-about">About Me *</label>
+            <textarea id="input-about" rows="4" placeholder="Enter bio"></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="input-skills">Skills (separated with commas)</label>
+            <input type="text" id="input-skills" placeholder="e.g. HTML, CSS, JavaScript, Git">
+          </div>
+
+          <div class="form-actions">
+            <button type="submit" id="btn-save" class="btn success">Save</button>
+            <button type="button" id="btn-cancel" class="btn danger">Cancel</button>
+          </div>
+        </form>
+      </div>
+
     </section>
+
+    <!-- 2. ABOUT SECTION -->
+    <section id="about-section" class="card margin-top">
+      <h2>About Me Details</h2>
+      <p>Passionate about building intuitive web systems, cybersecurity, and cross-platform applications.</p>
+    </section>
+
+    <!-- 3. SKILLS SECTION -->
+    <section id="skills-section" class="card margin-top">
+      <h2>Technical Capabilities</h2>
+      <p>Proficient in frontend systems, network packet analysis, and modular application development.</p>
+    </section>
+
+    <!-- 4. PROJECTS SECTION -->
+    <section id="projects-section" class="card margin-top">
+      <h2>Projects</h2>
+      <ul>
+        <li><strong>Cafe Management System:</strong> Desktop application built using PySide6.</li>
+        <li><strong>Veterinary Clinic System:</strong> System application featuring inventory and booking modules.</li>
+      </ul>
+    </section>
+
+    <!-- 5. CONTACT SECTION -->
+    <section id="contact-section" class="card margin-top">
+      <h2>Contact</h2>
+      <p>Email: 20240030402@my.xu.edu.ph</p>
+      <p>Location: Cagayan de Oro City, Philippines</p>
+    </section>
+
   </main>
 
   <script src="cordova.js"></script>
+  <script src="js/index.js"></script>
 </body>
 </html>
