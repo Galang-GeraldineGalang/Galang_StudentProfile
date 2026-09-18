@@ -76,4 +76,4 @@ Follow these steps to set up, build, and run the Apache Cordova application loca
 1. **Clone the Repository:**
    ```bash
    git clone [https://github.com/Galang-GeraldineGalang/Galang_StudentProfile.git](https://github.com/Galang-GeraldineGalang/Galang_StudentProfile.git)
-cd Galang_StudentProfile
+   cd Galang_StudentProfile
