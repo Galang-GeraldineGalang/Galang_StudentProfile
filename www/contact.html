@@ -1,76 +1,72 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Contact - Profile</title>
-  <link rel="stylesheet" href="css/style.css">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Contact - Geraldine Galang</title>
+    <link rel="stylesheet" href="css/index.css">
 </head>
 <body>
 
+    <nav class="navbar">
+      <div class="nav-brand">Geraldine's Portfolio</div>
+      <ul class="nav-links">
+        <li><a href="index.html">Profile</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="skills.html">Skills</a></li>
+        <li><a href="projects.html">Projects</a></li>
+        <li><a href="contact.html" class="active">Contact</a></li>
+      </ul>
+    </nav>
 
-  <nav class="navbar">
-    <a href="index.html" class="nav-link">Home</a>
-    <a href="about.html" class="nav-link">About</a>
-    <a href="skills.html" class="nav-link">Skills</a>
-    <a href="projects.html" class="nav-link">Projects</a>
-    <a href="contact.html" class="nav-link active">Contact</a>
-  </nav>
+    <main class="container">
+      
+      <section class="card">
+        <div class="profile-header text-center">
+          <div class="avatar-container">
+            <img src="img/pfp.jpg" alt="Profile Picture" class="profile-img" onerror="this.src='https://via.placeholder.com/150'">
+          </div>
+          <h1>Geraldine Galang</h1>
+          <p class="tagline">Aspiring Web Developer & IT Student</p>
+          <p class="subtitle">BS Information Technology - 3rd Year</p>
+        </div>
 
-  <main class="container">
-    <header class="page-header">
-      <h1>Get In Touch</h1>
-      <p class="subtitle">Feel free to reach out for collaborations or inquiries</p>
-    </header>
+        <hr style="margin: 20px 0; border: 0; border-top: 1px solid #eee;">
 
-    <div class="contact-grid">
+        <div class="contact-content">
+          <h2 class="section-title">Get In Touch</h2>
 
-    
-      <section class="content-card">
-        <h2>Contact Details</h2>
-        <ul class="contact-list">
-          <li>
-            <strong>Email:</strong> 
-            <a href="mailto:ggalang@e.xu.edu.ph">ggalang@my.xu.edu.ph</a>
-          </li>
-          <li>
-            <strong>GitHub:</strong> 
-            <a href="https://github.com/Galang-GeraldineGalang" target="_blank">github.com/Galang-GeraldineGalang</a>
-          </li>
-          <li>
-            <strong>Location:</strong> 
-            Cagayan de Oro City, Philippines
-          </li>
-          <li>
-            <strong>Affiliation:</strong> 
-            Xavier University - Ateneo de Cagayan
-          </li>
-        </ul>
+          <div class="contact-info">
+            <p><strong>Email:</strong> 20240030402@my.xu.edu.ph</p>
+            <p><strong>Location:</strong> Cagayan de Oro City, Philippines</p>
+            <p><strong>LinkedIn / GitHub:</strong> https://github.com/Galang-GeraldineGalang</p>
+          </div>
+
+          <form class="contact-form" onsubmit="event.preventDefault(); alert('Message sent!');">
+            <div class="form-group">
+              <label for="contact-name">Your Name</label>
+              <input type="text" id="contact-name" placeholder="Enter your name" required>
+            </div>
+
+            <div class="form-group">
+              <label for="contact-email">Your Email</label>
+              <input type="email" id="contact-email" placeholder="Enter your email" required>
+            </div>
+
+            <div class="form-group">
+              <label for="contact-message">Message</label>
+              <textarea id="contact-message" rows="4" placeholder="Write your message here..." required></textarea>
+            </div>
+
+            <button type="submit" class="btn primary">Send Message</button>
+          </form>
+        </div>
+
       </section>
 
-    
-      <section class="content-card">
-        <h2>Send a Message</h2>
-        <form class="contact-form" action="#" method="post" onclick="return false;">
-          <div class="form-group">
-            <label for="name">Your Name</label>
-            <input type="text" id="name" name="name" placeholder="Enter your full name">
-          </div>
-          <div class="form-group">
-            <label for="email">Your Email</label>
-            <input type="email" id="email" name="email" placeholder="Enter your email address">
-          </div>
-          <div class="form-group">
-            <label for="message">Message</label>
-            <textarea id="message" name="message" rows="4" placeholder="Write your message here..."></textarea>
-          </div>
-          <button type="submit" class="btn">Send Message</button>
-        </form>
-      </section>
+    </main>
 
-    </div>
-  </main>
-
-  <script src="cordova.js"></script>
+    <script src="cordova.js"></script>
+    <script src="js/index.js"></script>
 </body>
 </html>

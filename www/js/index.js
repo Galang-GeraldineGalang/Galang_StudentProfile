@@ -1,153 +1,129 @@
 document.addEventListener('deviceready', onDeviceReady, false);
 
+function onDeviceReady() {
+    initProfileApp();
+}
 
+// Fallback for browser testing
 document.addEventListener('DOMContentLoaded', () => {
-  if (!window.cordova) {
-    onDeviceReady();
-  }
+    if (!window.cordova) {
+        initProfileApp();
+    }
 });
 
-const DEFAULT_PROFILE = {
-  fullName: 'Geraldine Galang',
-  course: 'BS Information Technology',
-  yearLevel: '3rd Year',
-  about: 'Student at Xavier University - Ateneo de Cagayan with a focus on web technologies, coding, and networking.',
-  skills: ['JavaScript', 'HTML/CSS', 'Python', 'Git']
-};
+function initProfileApp() {
+    // DOM Elements - View Mode
+    const profileView = document.getElementById('profile-view');
+    const profileEdit = document.getElementById('profile-edit');
+    const btnEdit = document.getElementById('btn-edit');
+    const btnCancel = document.getElementById('btn-cancel');
+    const formEdit = document.getElementById('form-edit-profile');
 
-function onDeviceReady() {
-  
-  loadProfile();
+    // Display Elements
+    const displayAvatar = document.getElementById('display-avatar');
+    const displayFullname = document.getElementById('display-fullname');
+    const displayTagline = document.getElementById('display-tagline');
+    const displayCourse = document.getElementById('display-course');
+    const displayYear = document.getElementById('display-year');
+    const displayAbout = document.getElementById('display-about');
+    const displaySkills = document.getElementById('display-skills');
 
-  
-  const btnEdit = document.getElementById('btn-edit');
-  const btnCancel = document.getElementById('btn-cancel');
-  const formEdit = document.getElementById('form-edit-profile');
+    // Input Elements
+    const inputFullname = document.getElementById('input-fullname');
+    const inputTagline = document.getElementById('input-tagline');
+    const inputCourse = document.getElementById('input-course');
+    const inputYear = document.getElementById('input-year');
+    const inputAbout = document.getElementById('input-about');
+    const inputSkills = document.getElementById('input-skills');
 
-  if (btnEdit) btnEdit.addEventListener('click', openEditView);
-  if (btnCancel) btnCancel.addEventListener('click', cancelEdit);
-  if (formEdit) formEdit.addEventListener('submit', saveProfile);
-}
+    // Default Profile Data
+    const defaultData = {
+        avatar: 'img/pfp.jpg',
+        fullname: 'Geraldine Galang',
+        tagline: 'Aspiring Web Developer & IT Student',
+        course: 'BS Information Technology',
+        year: '3rd Year',
+        about: 'I am a 3rd year Information Technology student at Xavier University - Ateneo de Cagayan focusing on web technologies, coding, and cybersecurity. I am also a student-athlete.',
+        skills: ['HTML/CSS', 'JavaScript', 'Java', 'MySQL', 'Git']
+    };
 
+    // Load Profile Data from localStorage or Defaults
+    function loadProfile() {
+        const storedData = localStorage.getItem('user_profile');
+        const data = storedData ? JSON.parse(storedData) : defaultData;
 
-function loadProfile() {
-  const savedData = localStorage.getItem('studentProfile');
-  let profileData;
+        if (displayAvatar) displayAvatar.src = data.avatar;
+        if (displayFullname) displayFullname.textContent = data.fullname;
+        if (displayTagline) displayTagline.textContent = data.tagline;
+        if (displayCourse) displayCourse.textContent = data.course;
+        if (displayYear) displayYear.textContent = data.year;
+        if (displayAbout) displayAbout.textContent = data.about;
 
-  if (savedData) {
-    profileData = JSON.parse(savedData);
-  } else {
-    profileData = DEFAULT_PROFILE;
-    localStorage.setItem('studentProfile', JSON.stringify(DEFAULT_PROFILE));
-  }
+        // Render Skills
+        if (displaySkills) {
+            displaySkills.innerHTML = '';
+            data.skills.forEach(skill => {
+                const li = document.createElement('li');
+                li.textContent = skill.trim();
+                displaySkills.appendChild(li);
+            });
+        }
+    }
 
-  updateProfileUI(profileData);
-}
+    // Populate Form Inputs for Editing
+    function populateForm() {
+        const storedData = localStorage.getItem('user_profile');
+        const data = storedData ? JSON.parse(storedData) : defaultData;
 
-function updateProfileUI(data) {
-  document.getElementById('display-fullname').textContent = data.fullName;
-  document.getElementById('display-course').textContent = data.course;
-  document.getElementById('display-year').textContent = data.yearLevel;
-  document.getElementById('display-about').textContent = data.about;
+        if (inputFullname) inputFullname.value = data.fullname;
+        if (inputTagline) inputTagline.value = data.tagline;
+        if (inputCourse) inputCourse.value = data.course;
+        if (inputYear) inputYear.value = data.year;
+        if (inputAbout) inputAbout.value = data.about;
+        if (inputSkills) inputSkills.value = data.skills.join(', ');
+    }
 
-  const skillsList = document.getElementById('display-skills');
-  skillsList.innerHTML = '';
+    // Event Listeners
+    if (btnEdit) {
+        btnEdit.addEventListener('click', () => {
+            populateForm();
+            profileView.classList.add('hidden');
+            profileEdit.classList.remove('hidden');
+        });
+    }
 
-  if (data.skills && data.skills.length > 0) {
-    data.skills.forEach(skill => {
-      const li = document.createElement('li');
-      li.textContent = skill;
-      skillsList.appendChild(li);
-    });
-  } else {
-    skillsList.innerHTML = '<li>No skills listed.</li>';
-  }
-}
+    if (btnCancel) {
+        btnCancel.addEventListener('click', () => {
+            profileEdit.classList.add('hidden');
+            profileView.classList.remove('hidden');
+        });
+    }
 
+    if (formEdit) {
+        formEdit.addEventListener('submit', (e) => {
+            e.preventDefault();
 
-function openEditView() {
-  populateFormFromStorage();
-  toggleEditMode(true);
-}
+            const updatedData = {
+                avatar: defaultData.avatar, // Keeps current PFP path
+                fullname: inputFullname.value.trim(),
+                tagline: inputTagline.value.trim(),
+                course: inputCourse.value.trim(),
+                year: inputYear.value.trim(),
+                about: inputAbout.value.trim(),
+                skills: inputSkills.value.split(',').filter(s => s.trim() !== '')
+            };
 
-function populateFormFromStorage() {
-  const savedData = localStorage.getItem('studentProfile');
-  const data = savedData ? JSON.parse(savedData) : DEFAULT_PROFILE;
+            // Save to LocalStorage
+            localStorage.setItem('user_profile', JSON.stringify(updatedData));
 
-  document.getElementById('input-fullname').value = data.fullName || '';
-  document.getElementById('input-course').value = data.course || '';
-  document.getElementById('input-year').value = data.yearLevel || '';
-  document.getElementById('input-about').value = data.about || '';
-  document.getElementById('input-skills').value = data.skills ? data.skills.join(', ') : '';
-}
+            // Reload UI & Switch back to View Mode
+            loadProfile();
+            profileEdit.classList.add('hidden');
+            profileView.classList.remove('hidden');
+            alert('Profile updated successfully!');
+        });
+    }
 
-
-function validateInputs(fullName, course, yearLevel, about) {
-  if (!fullName) {
-    alert("Please enter your full name.");
-    return false;
-  }
-  if (!course) {
-    alert("Please enter your course.");
-    return false;
-  }
-  if (!yearLevel) {
-    alert("Please enter your year level.");
-    return false;
-  }
-  if (!about) {
-    alert("Please complete your About Me section.");
-    return false;
-  }
-  return true;
-}
-
-
-function saveProfile(event) {
-  event.preventDefault();
-
-  const fullName = document.getElementById('input-fullname').value.trim();
-  const course = document.getElementById('input-course').value.trim();
-  const yearLevel = document.getElementById('input-year').value.trim();
-  const about = document.getElementById('input-about').value.trim();
-  const skillsInput = document.getElementById('input-skills').value.trim();
-
-  if (!validateInputs(fullName, course, yearLevel, about)) {
-    return;
-  }
-
-  const skillsArray = skillsInput
-    ? skillsInput.split(',').map(s => s.trim()).filter(s => s.length > 0)
-    : [];
-
-  const updatedProfile = {
-    fullName,
-    course,
-    yearLevel,
-    about,
-    skills: skillsArray
-  };
-
-  localStorage.setItem('studentProfile', JSON.stringify(updatedProfile));
-  updateProfileUI(updatedProfile);
-  toggleEditMode(false);
-}
-
-
-function cancelEdit() {
-  toggleEditMode(false);
-}
-
-
-function toggleEditMode(isEditing) {
-  const viewContainer = document.getElementById('profile-view');
-  const editContainer = document.getElementById('profile-edit');
-
-  if (isEditing) {
-    viewContainer.classList.add('hidden');
-    editContainer.classList.remove('hidden');
-  } else {
-    viewContainer.classList.remove('hidden');
-    editContainer.classList.add('hidden');
-  }
+    // Initial Load
+    loadProfile();
 }

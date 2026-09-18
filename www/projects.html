@@ -1,75 +1,79 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Projects - Profile</title>
-  <link rel="stylesheet" href="css/style.css">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Projects - Geraldine Galang</title>
+    <link rel="stylesheet" href="css/index.css">
 </head>
 <body>
 
-  <nav class="navbar">
-    <a href="index.html" class="nav-link">Home</a>
-    <a href="about.html" class="nav-link">About</a>
-    <a href="skills.html" class="nav-link">Skills</a>
-    <a href="projects.html" class="nav-link active">Projects</a>
-    <a href="contact.html" class="nav-link">Contact</a>
-  </nav>
+    <nav class="navbar">
+      <div class="nav-brand">Geraldine's Portfolio</div>
+      <ul class="nav-links">
+        <li><a href="index.html">Profile</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="skills.html">Skills</a></li>
+        <li><a href="projects.html" class="active">Projects</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
 
-  <main class="container">
-    <header class="page-header">
-      <h1>Featured Projects</h1>
-      <p class="subtitle">A showcase of desktop applications, web systems, and design projects</p>
-    </header>
-
-    <div class="projects-grid">
-
-      <article class="content-card project-card">
-        <img src="img/cafe-system.jpg" alt="Cafe Management System Screenshot" class="project-img">
-        <div class="project-details">
-          <h2>Cafe Management System</h2>
-          <p class="project-description">
-            A desktop application built to streamline cafe ordering, calculate order totals in real time, apply input restriction rules, and format clean printable receipt outputs.
-          </p>
-          <div class="project-meta">
-            <p><strong>Role:</strong> Lead Developer — Designed the PySide6 desktop GUI, handled bill calculations, implemented numerical input validations, and formatted receipt layouts.</p>
-            <p><strong>Technologies:</strong> Python, PySide6, Qt Framework</p>
-          </div>
-        </div>
-      </article>
-
-      <article class="content-card project-card">
-        <img src="img/vcms.jpg" alt="Veterinary Clinic Management System ERD" class="project-img">
-        <div class="project-details">
-          <h2>Veterinary Clinic Management System (VCMS)</h2>
-          <p class="project-description">
-            A management software system designed to track pet patient records, appointment schedules, owner billing, and clinical diagnostics.
-          </p>
-          <div class="project-meta">
-            <p><strong>Role:</strong> Systems Analyst & Database Designer — Authored system use cases, created process workflows, and mapped the complete Entity-Relationship Diagram (ERD).</p>
-            <p><strong>Technologies:</strong> MySQL, Database Architecture, UML Tools</p>
-          </div>
-        </div>
-      </article>
-
+    <main class="container">
       
-      <article class="content-card project-card">
-        <img src="img/student-profile.jpg" alt="Responsive Student Profile Application" class="project-img">
-        <div class="project-details">
-          <h2>Responsive Mobile Student Profile</h2>
-          <p class="project-description">
-            A mobile-first hybrid application showcasing personal developer experience, technical skill stacks, and project case studies.
-          </p>
-          <div class="project-meta">
-            <p><strong>Role:</strong> Mobile Application Developer — Built responsive layouts using pure CSS Grid/Flexbox and compiled the web codebase into a hybrid mobile app package.</p>
-            <p><strong>Technologies:</strong> HTML5, CSS3, Apache Cordova, Git/GitHub</p>
+      <section class="card">
+        <div class="profile-header text-center">
+          <div class="avatar-container">
+            <img src="img/pfp.jpg" alt="Profile Picture" class="profile-img" onerror="this.src='https://via.placeholder.com/150'">
+          </div>
+          <h1>Geraldine Galang</h1>
+          <p class="tagline">Aspiring Web Developer & IT Student</p>
+          <p class="subtitle">BS Information Technology - 3rd Year</p>
+        </div>
+
+        <hr style="margin: 20px 0; border: 0; border-top: 1px solid #eee;">
+
+        <div class="projects-content">
+          <h2 class="section-title">My Projects</h2>
+
+          <div class="projects-grid">
+            
+            <div class="project-card">
+              <h3>1. Student Profile Cordova App</h3>
+              <p class="project-desc">A mobile-first dynamic web application built to showcase student profile information, navigation menus, and editing capabilities.</p>
+              <p><strong>Role:</strong> Lead Developer (Frontend Architecture & UI Layout)</p>
+              <p><strong>Technologies Used:</strong> HTML5, CSS3, JavaScript, Apache Cordova</p>
+            </div>
+
+            <div class="project-card">
+              <h3>2. Academic Task Management System</h3>
+              <p class="project-desc">A web application designed to help students track their academic deadlines, assignments, and group project tasks efficiently.</p>
+              <p><strong>Role:</strong> Frontend Developer & UI Designer</p>
+              <p><strong>Technologies Used:</strong> HTML, CSS, JavaScript, PHP, MySQL</p>
+            </div>
+
+            <div class="project-card">
+              <h3>3. E-Commerce Prototyping Layout</h3>
+              <p class="project-desc">A responsive online shop prototype featuring product listings, filtering systems, and functional shopping cart layouts.</p>
+              <p><strong>Role:</strong> UI/UX Designer & Web Developer</p>
+              <p><strong>Technologies Used:</strong> HTML5, CSS Grid/Flexbox, Bootstrap, Git</p>
+            </div>
+
+             <div class="project-card">
+              <h3>4. B.ai - AI Assistant</h3>
+              <p class="project-desc">An AI assistant created to help humans in daily lives. It function similarly to Gemini, ChatGPT, and other AI assistant tools.</p>
+              <p><strong>Role:</strong> Backend Developer</p>
+              <p><strong>Technologies Used:</strong> Python, Android Studio, Git</p>
+            </div>
+
           </div>
         </div>
-      </article>
 
-    </div>
-  </main>
+      </section>
 
-  <script src="cordova.js"></script>
+    </main>
+
+    <script src="cordova.js"></script>
+    <script src="js/index.js"></script>
 </body>
 </html>

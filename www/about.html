@@ -1,57 +1,93 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>About - Profile</title>
-  <link rel="stylesheet" href="css/style.css">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>About - Geraldine Galang</title>
+    <link rel="stylesheet" href="css/index.css">
 </head>
 <body>
 
+    <nav class="navbar">
+      <div class="nav-brand">Geraldine's Portfolio</div>
+      <ul class="nav-links">
+        <li><a href="index.html">Profile</a></li>
+        <li><a href="about.html" class="active">About</a></li>
+        <li><a href="skills.html">Skills</a></li>
+        <li><a href="projects.html">Projects</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+
+    <main class="container">
+      
+      <section class="card">
+        <div class="profile-header text-center">
+          <div class="avatar-container">
+            <img src="img/pfp.jpg" alt="Profile Picture" class="profile-img" onerror="this.src='https://via.placeholder.com/150'">
+          </div>
+          <h1>Geraldine Galang</h1>
+          <p class="tagline">Aspiring Web Developer & IT Student</p>
+          <p class="subtitle">BS Information Technology - 3rd Year</p>
+        </div>
+
+        <hr style="margin: 20px 0; border: 0; border-top: 1px solid #eee;">
+
+        <div class="about-content">
+          <h2 class="section-title">About Me</h2>
+
+          <p>
+            Greetings! I am <strong>Geraldine Galang</strong>, a passionate Information Technology student dedicated to learning modern software development, web applications, and user-centered digital solutions. Throughout my academic journey, I have actively engaged in various coding projects, collaborating with peers to design responsive web layouts and mobile-first hybrid applications. I have also participated in Hackathon during my second year.
+            Aside from being an aspiring web developer, I am also a student-athlete. I have been representing Xavier University in International, National, or Local competitions. I am part of the XU Crusaders Team. 
+          </p>
+
+<div class="about-block">
+  <h3>Educational Background</h3>
   
-  <nav class="navbar">
-    <a href="index.html" class="nav-link">Home</a>
-    <a href="about.html" class="nav-link active">About</a>
-    <a href="skills.html" class="nav-link">Skills</a>
-    <a href="projects.html" class="nav-link">Projects</a>
-    <a href="contact.html" class="nav-link">Contact</a>
-  </nav>
 
+  <div class="edu-card">
+    <h4 class="edu-title">College</h4>
+    <ul class="info-list">
+      <li><strong>Degree:</strong> Bachelor of Science in Information Technology</li>
+      <li><strong>Institution:</strong> Xavier University - Ateneo de Cagayan</li>
+      <li><strong>Year Level:</strong> 3rd Year Student</li>
+    </ul>
+  </div>
 
-  <main class="container">
-    <header class="page-header">
-      <h1>About Me</h1>
-      <p class="subtitle">Background, Academic Journey & Aspirations</p>
-    </header>
+  <div class="edu-card">
+    <h4 class="edu-title">Senior High School</h4>
+    <ul class="info-list">
+      <li><strong>Track / Strand:</strong> HUMSS (Humanities and Social Sciences)</li>
+      <li><strong>Institution:</strong> Liceo de Cagayan University</li>
+    </ul>
+  </div>
+</div>
 
-    <section class="content-card">
-      <h2>Personal Biography</h2>
-      <p>
-        I am currently a student at Xavier University - Ateneo de Cagayan, pursuing my studies in Information Technology with a strong focus on software engineering, web systems development, and cybersecurity. I enjoy building applications that solve real-world problems through clean user interfaces and structured backend design.
-      </p>
-      <p>
-        Beyond academics, I actively explore emerging web frameworks, network security tools, and practical system architectures. Outside of tech, I spend my time practicing guitar, gaming, and working on personal side projects that combine creative visual design with functional code.
-      </p>
-    </section>
+          <div class="about-block">
+            <h3>Interests</h3>
+            <div class="tags-container">
+              <span class="tag">Web Development</span>
+              <span class="tag">UI/UX Design</span>
+              <span class="tag">Mobile Apps</span>
+              <span class="tag">Playing Guitar</span>
+              <span class="tag">Reading Books</span>
+              <span class="tag">Sports</span>
+            </div>
+          </div>
 
-    <section class="content-card">
-      <h2>Educational Background</h2>
-      <ul class="info-list">
-        <li><strong>Institution:</strong> Xavier University - Ateneo de Cagayan</li>
-        <li><strong>Program:</strong> BS Information Technology</li>
-        <li><strong>Key Coursework:</strong> Web Systems & Technologies, Application Development, Network Security & Forensics, Database Management Systems</li>
-      </ul>
-    </section>
+          <div class="about-block">
+            <h3>Goals & Aspirations</h3>
+            <p>
+              My primary goal as of today is to find the right field in IT, and from then, I aspire to master that field. I aspire to dive deep in Cybersecurity as it pique my interests.
+            </p>
+          </div>
+        </div>
 
-    <section class="content-card">
-      <h2>Interests & Aspirations</h2>
-      <ul class="info-list">
-        <li><strong>Technical Interests:</strong> Full-stack web development, desktop GUI applications, and cybersecurity forensics.</li>
-        <li><strong>Goals:</strong> To graduate with a strong foundation in modern web systems, build scalable software applications, and advance into specialized roles in software development and network security.</li>
-      </ul>
-    </section>
-  </main>
+      </section>
 
-  <script src="cordova.js"></script>
+    </main>
+
+    <script src="cordova.js"></script>
+    <script src="js/index.js"></script>
 </body>
 </html>
