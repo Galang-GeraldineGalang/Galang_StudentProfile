@@ -1,79 +1,71 @@
 # Student Profile Cordova Application
 
-A hybrid mobile application built using **Apache Cordova**, **HTML5**, **CSS3**, and **vanilla JavaScript**. This application displays student profile information and allows dynamic profile editing with client-side validation and persistent storage using `localStorage`.
+A hybrid mobile application built using **Apache Cordova**, **HTML5**, **CSS3**, and **vanilla JavaScript**. This application displays student profile information, allows dynamic profile editing with local storage persistence, and integrates native device hardware to capture and save profile pictures using the Cordova Camera Plugin.
 
 ---
 
 ## 1. Project Description
-The **Student Profile Application** serves as a digital portfolio for students to display their academic details, personal background, technical skill sets, completed projects, and contact channels. Developed as part of academic coursework, the app emphasizes modular structure, dynamic DOM manipulation using JavaScript, client-side data persistence, and mobile responsiveness.
+The Student Profile application is a multi-page portfolio mobile app designed for **Geraldine Galang**, a 3rd-year BS Information Technology student at Xavier University - Ateneo de Cagayan. The app showcases academic background, technical skills, projects, and contact details while incorporating interactive features like live JSON editing and native device camera integration.
 
 ---
 
-## 2. Application Pages & Sections
-The application consists of five main interactive pages/sections:
-
-* **Profile:** Displays core identity information including Full Name, Course, Year Level, profile photo, and an action button to toggle the Edit Profile interface.
-* **About:** Contains a detailed personal description, background, academic goals, and hobbies.
-* **Skills:** Showcases technical and soft skills rendered dynamically from stored profile data.
-* **Projects:** Features previous technical projects, case studies, and application highlights with descriptions and links.
-* **Contact:** Provides communication channels such as institutional email, social media links, location, and a contact form interface.
+## 2. Application Pages
+* **Profile (`index.html`)**: Serves as the landing page displaying core profile details, skills tags, interactive profile picture camera capture, and dynamic edit profile capabilities.
+* **About (`about.html`)**: Details personal background, including structured Senior High School (SHS) and College educational histories with card-styled UI layouts.
+* **Skills (`skills.html`)**: Highlights technical competencies categorized into Web Development, Programming Languages, and Core IT Tools.
+* **Projects (`projects.html`)**: Showcases featured academic and personal IT projects using responsive card containers.
+* **Contact (`contact.html`)**: Contains an interactive contact form and direct personal communication channels.
 
 ---
 
 ## 3. Profile Editing
-The **Edit Profile** feature allows users to dynamically update their profile details without modifying source code.
-
-* **Editable Fields:**
-  * Full Name
-  * Course / Academic Program
-  * Year Level
-  * About Me Description
-  * Skills List (entered as comma-separated values)
-
-When the user selects **Edit Profile**, the application toggles from the display interface to an interactive editing form pre-filled with the current profile data.
+The **Edit Profile** feature allows users to modify profile details such as Full Name, Tagline, Course, Year Level, Brief Description, and Key Skills in real-time. 
+* Data entered into the edit form is validated and saved as a JSON object into browser/device `localStorage` (`student_profile_data`).
+* When the app reopens, it parses the stored JSON string to maintain persistent profile information across sessions.
 
 ---
 
-## 4. JavaScript Functionality
-JavaScript drives all dynamic operations in the app:
-
-* **Form Handling:** Captures input events, prevents default browser page reloads upon submission, and extracts field values.
-* **Validation:** Enforces input constraints before saving data. Ensures required fields (Full Name, Course, Year Level, About Me) are non-empty and alerts the user if any required data is missing.
-* **Profile Updates:** Reads verified inputs, updates the internal profile state object, and immediately re-renders DOM elements in the View section.
-* **Save Functionality:** Validates inputs, saves the updated payload to `localStorage`, renders the refreshed UI, and exits Edit Mode.
-* **Cancel Functionality:** Discards uncommitted changes, re-populates the form with the last saved state, and closes the Edit Mode without modifying existing data.
+## 4. Camera Integration
+The application integrates the native device camera using the `cordova-plugin-camera` plugin.
+* **Workflow**:
+  `[Tap Profile Picture / Click Change Profile Picture]` ➔ `[Device Camera Opens]` ➔ `[Capture Image]` ➔ `[Update Profile Picture & Save to LocalStorage]`
 
 ---
 
-## 5. Local Data Storage
-The application utilizes the browser/WebView **`localStorage` API** to ensure data persistence:
-
-* **Data Format:** Profile data is stored as a serialized JSON string under the key `'studentProfile'`.
-* **Startup Retrieval:** When the Cordova app launches, JavaScript retrieves and parses `'studentProfile'`.
-* **Default Fallback:** If no data exists in `localStorage` (e.g., first-time app launch), the application initializes and saves default profile information automatically.
-* **Persistence:** Changes persist even after closing and reopening the application.
+## 5. Device Feature Integration
+Apache Cordova provides a native bridge API between JavaScript and the underlying mobile OS (Android/iOS). Standard web applications running in a browser cannot directly access native camera hardware due to security and sandbox restrictions. Cordova's `navigator.camera` API bridges this gap, allowing JavaScript code to trigger native camera hardware activities and retrieve captured image data.
 
 ---
 
-## 6. Responsive Design
-The application employs flexible CSS layouts to deliver a uniform user experience across various screen sizes:
-
-* **Desktop:** Utilizes multi-column grid layouts, wider form containers, and enhanced spacing.
-* **Tablet:** Adapts navigation menus and side-by-side elements into flexible stacked grid items.
-* **Mobile (Cordova Target):** Uses single-column flexbox layouts, touch-friendly touch targets/buttons, fluid media queries, and responsive viewport settings.
+## 6. Image Handling
+* Upon taking a photo, the camera plugin encodes the captured image into a **Base64 `DATA_URL` string**.
+* The application updates the `src` attribute of the `#display-avatar` image element immediately.
+* The Base64 image string is saved into the `student_profile_data` JSON object inside `localStorage`, ensuring the new profile picture persists even after closing or restarting the application.
 
 ---
 
-## 7. How to Run
-Follow these steps to set up, build, and run the Apache Cordova application locally:
+## 7. Error Handling
+* **Camera Cancellation**: If the user opens the camera and cancels without taking a picture, the application catches the event gracefully, preserves the existing profile picture, and returns to the profile screen without crashing.
+* **Permission Denial / Access Errors**: If camera permissions are denied or hardware is unavailable, an alert message (`Unable to access the camera. Please check your device permissions.`) informs the user without terminating the app.
+
+---
+
+## 8. Responsive Design
+The app utilizes CSS Flexbox, Grid, relative units, and media queries to ensure smooth layout adaptations across:
+* **Desktop Monitors**: Wide multi-column card views and top navbar layout.
+* **Tablets**: Adjusted grid gap spacing and fluid container paddings.
+* **Mobile Devices**: Stacked single-column card elements and touch-optimized action buttons.
+
+---
+
+## 9. How to Run
 
 ### Prerequisites
-* [Node.js](https://nodejs.org/) installed
-* [Apache Cordova CLI](https://cordova.apache.org/) installed globally (`npm install -g cordova`)
-* Android Studio (for Android build/emulator)
+* Node.js & npm installed
+* Apache Cordova CLI installed (`npm install -g cordova`)
 
-### Steps
-1. **Clone the Repository:**
+### Setup Steps
+1. Clone the repository:
    ```bash
    git clone [https://github.com/Galang-GeraldineGalang/Galang_StudentProfile.git](https://github.com/Galang-GeraldineGalang/Galang_StudentProfile.git)
    cd Galang_StudentProfile

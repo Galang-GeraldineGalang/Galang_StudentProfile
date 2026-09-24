@@ -8,7 +8,6 @@
 </head>
 <body>
 
-    <!-- NAVBAR -->
     <nav class="navbar">
       <div class="nav-brand">Geraldine's Portfolio</div>
       <ul class="nav-links">
@@ -20,23 +19,34 @@
       </ul>
     </nav>
 
-    <!-- MAIN CONTAINER -->
     <main class="container">
       <section id="profile-section" class="card">
 
-        <!-- VIEW MODE -->
         <div id="profile-view">
           <div class="profile-header text-center">
-            <div class="avatar-container">
-              <img id="display-avatar" src="img/pfp.jpg" alt="Profile Picture" class="profile-img" onerror="this.src='https://via.placeholder.com/150'">
-            </div>
-            <h1 id="display-fullname">Geraldine Galang</h1>
-            <p class="tagline" id="display-tagline">Aspiring Web Developer & IT Student</p>
-            <p class="subtitle">
-              <span id="display-course">BS Information Technology</span> - 
-              <span id="display-year">3rd Year</span>
-            </p>
-          </div>
+          <div class="avatar-container" id="avatar-clickable" style="cursor: pointer; position: relative; display: inline-block;">
+    <img id="display-avatar" src="img/pfp.jpg" alt="Profile Picture" class="profile-img" onerror="this.src='https://via.placeholder.com/150'">
+    <div style="font-size: 0.8rem; color: #666; margin-top: 5px;">(Tap photo to change)</div>
+  </div>
+
+  <div style="margin-top: 10px;">
+    <button type="button" id="btn-change-photo" class="btn primary" style="font-size: 0.85rem; padding: 6px 12px;">
+      📷 Change Profile Picture
+    </button>
+  </div>
+
+  <input type="file" id="camera-file-input" accept="image/*" capture="environment" style="display: none;">
+  <script src="cordova.js"></script>
+  <script src="js/index.js"></script>
+</body>
+
+  <h1 id="display-fullname" style="margin-top: 15px;">Geraldine Galang</h1>
+  <p class="tagline" id="display-tagline">Aspiring Web Developer & IT Student</p>
+  <p class="subtitle">
+    <span id="display-course">BS Information Technology</span> - 
+    <span id="display-year">3rd Year</span>
+  </p>
+</div>
 
           <div class="profile-body">
             <div class="info-card">
@@ -58,7 +68,6 @@
           </div>
         </div>
 
-        <!-- EDIT MODE -->
         <div id="profile-edit" class="hidden">
           <h2>Edit Profile Information</h2>
           
@@ -105,10 +114,9 @@
 
     <script src="cordova.js"></script>
 
-    <!-- INLINE / LOCAL JS WITH JSON LOCALSTORAGE LOGIC -->
+
     <script>
       document.addEventListener('DOMContentLoaded', () => {
-        // Elements
         const profileView = document.getElementById('profile-view');
         const profileEdit = document.getElementById('profile-edit');
         const btnEdit = document.getElementById('btn-edit');
@@ -130,7 +138,6 @@
         const inputAbout = document.getElementById('input-about');
         const inputSkills = document.getElementById('input-skills');
 
-        // Initial JSON Object Data
         const defaultProfileJSON = {
           avatar: "img/pfp.jpg",
           fullname: "Geraldine Galang",
@@ -141,7 +148,6 @@
           skills: ["HTML", "CSS", "JavaScript", "Cybersecurity", "Git"]
         };
 
-        // Load & Parse JSON from localStorage
         function loadProfileFromJSON() {
           const storedJSON = localStorage.getItem('student_profile_data');
           const data = storedJSON ? JSON.parse(storedJSON) : defaultProfileJSON;
@@ -164,7 +170,6 @@
           }
         }
 
-        // Populate Form Inputs from JSON
         function populateFormFromJSON() {
           const storedJSON = localStorage.getItem('student_profile_data');
           const data = storedJSON ? JSON.parse(storedJSON) : defaultProfileJSON;
@@ -177,7 +182,6 @@
           if (inputSkills) inputSkills.value = data.skills.join(', ');
         }
 
-        // Toggle to Edit Mode
         if (btnEdit) {
           btnEdit.addEventListener('click', () => {
             populateFormFromJSON();
@@ -186,7 +190,6 @@
           });
         }
 
-        // Toggle back to View Mode
         if (btnCancel) {
           btnCancel.addEventListener('click', () => {
             profileEdit.classList.add('hidden');
@@ -194,7 +197,6 @@
           });
         }
 
-        // Save updated data back as JSON to localStorage
         if (formEdit) {
           formEdit.addEventListener('submit', (e) => {
             e.preventDefault();
@@ -209,17 +211,14 @@
               skills: inputSkills.value.split(',').map(s => s.trim()).filter(s => s !== '')
             };
 
-            // Save JSON String
             localStorage.setItem('student_profile_data', JSON.stringify(updatedProfileJSON));
 
-            // Reload UI
             loadProfileFromJSON();
             profileEdit.classList.add('hidden');
             profileView.classList.remove('hidden');
           });
         }
 
-        // Initial Execution
         loadProfileFromJSON();
       });
     </script>
