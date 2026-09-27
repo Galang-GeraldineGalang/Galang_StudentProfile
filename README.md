@@ -1,70 +1,148 @@
-# Student Profile Cordova Application
-
-A hybrid mobile application built using **Apache Cordova**, **HTML5**, **CSS3**, and **vanilla JavaScript**. This application displays student profile information, allows dynamic profile editing with local storage persistence, and integrates native device hardware to capture and save profile pictures using the Cordova Camera Plugin.
-
----
+# Student Profile Application with Supabase Authentication & Database
 
 ## 1. Project Description
-The Student Profile application is a multi-page portfolio mobile app designed for **Geraldine Galang**, a 3rd-year BS Information Technology student at Xavier University - Ateneo de Cagayan. The app showcases academic background, technical skills, projects, and contact details while incorporating interactive features like live JSON editing and native device camera integration.
+The **Student Profile Application** is a hybrid mobile application built with **Apache Cordova**, **HTML5**, **CSS3**, and **JavaScript**. Originally designed as a static client-side application, it has now evolved into a secure, database-driven mobile app integrated with **Supabase Auth** and **Supabase Database (PostgreSQL)**. 
+
+The application allows students to securely log in, view their personalized profile details, update their academic and personal information, change their profile picture, and navigate across protected application pages.
 
 ---
 
 ## 2. Application Pages
-* **Profile (`index.html`)**: Serves as the landing page displaying core profile details, skills tags, interactive profile picture camera capture, and dynamic edit profile capabilities.
-* **About (`about.html`)**: Details personal background, including structured Senior High School (SHS) and College educational histories with card-styled UI layouts.
-* **Skills (`skills.html`)**: Highlights technical competencies categorized into Web Development, Programming Languages, and Core IT Tools.
-* **Projects (`projects.html`)**: Showcases featured academic and personal IT projects using responsive card containers.
-* **Contact (`contact.html`)**: Contains an interactive contact form and direct personal communication channels.
+
+The application consists of the following primary sections and functionality:
+
+* **Login Functionality:** Serves as the authentication gateway. Unauthenticated users are strictly locked out of protected features and redirected to the login form.
+* **Profile (`index.html`):** The primary hub of the authenticated user. Displays the student's avatar, full name, tagline, course, year level, bio, and key skills. Also contains the edit modal/form and photo change triggers.
+* **About (`about.html`):** Displays detailed background information about the student, academic focus, and university affiliation.
+* **Skills (`skills.html`):** Showcases a categorized breakdown of technical, soft, and domain-specific skills.
+* **Projects (`projects.html`):** Highlights featured academic, personal, and coding projects completed by the student.
+* **Contact (`contact.html`):** Provides contact details and social links to connect with the student.
 
 ---
 
-## 3. Profile Editing
-The **Edit Profile** feature allows users to modify profile details such as Full Name, Tagline, Course, Year Level, Brief Description, and Key Skills in real-time. 
-* Data entered into the edit form is validated and saved as a JSON object into browser/device `localStorage` (`student_profile_data`).
-* When the app reopens, it parses the stored JSON string to maintain persistent profile information across sessions.
+## 3. Authentication
+
+User authentication is powered by **Supabase Auth** using Email and Password credentials.
+
+### Authentication Flow:
+[ Unauthenticated User ]
+│
+▼
+┌───────────┐
+│ Login Page│ ──(Enters Email & Password)──► [ Supabase Auth ]
+└───────────┘                                       │
+│                                      Valid Credentials?
+│                                             │
+├── NO ──► Display Error Message ◄────────────┤
+│                                             │
+└── YES ──────────────────────────────────────┘
+│
+▼
+[ Granted Access: Student Profile & Navigation ]
+
+
+1. **Unauthenticated Check:** When the app opens, `checkAuthSession()` checks for an active Supabase session. If no session exists, secondary pages automatically redirect back to `index.html`, and `index.html` renders only the login form.
+2. **Authentication:** The user submits their email and password via `supabaseClient.auth.signInWithPassword()`.
+3. **Session Granted:** Upon successful validation, the login interface hides, the protected main layout unhides, and a session token is stored.
 
 ---
 
-## 4. Camera Integration
-The application integrates the native device camera using the `cordova-plugin-camera` plugin.
-* **Workflow**:
-  `[Tap Profile Picture / Click Change Profile Picture]` ➔ `[Device Camera Opens]` ➔ `[Capture Image]` ➔ `[Update Profile Picture & Save to LocalStorage]`
+## 4. Student Profile Management
+
+An authenticated student has full management capabilities over their profile:
+
+* **View Profile:** Retrieves live profile data from Supabase and renders the student's information dynamically.
+* **Edit Information:** Clicking the **Edit Profile** button displays an interactive form populated with current details.
+* **Save Changes:** Submitting the form updates the record in both the remote Supabase PostgreSQL database and the device's local fallback storage (`localStorage`).
+* **Update Profile Picture:** Tapping the profile picture or clicking **Change Profile Picture** opens the device photo/file selector, rendering a live image preview and updating local/remote references.
+* **Log Out:** Clicking the **Logout** button in the navigation bar ends the Supabase session (`supabaseClient.auth.signOut()`) and locks all protected routes.
 
 ---
 
-## 5. Device Feature Integration
-Apache Cordova provides a native bridge API between JavaScript and the underlying mobile OS (Android/iOS). Standard web applications running in a browser cannot directly access native camera hardware due to security and sandbox restrictions. Cordova's `navigator.camera` API bridges this gap, allowing JavaScript code to trigger native camera hardware activities and retrieve captured image data.
+## 5. Database Integration
+
+The application utilizes **Supabase Database (PostgreSQL)** as its backend data store.
+
+### Stored Student Profile Schema (`profiles` table):
+* `id`: Primary key (UUID matching `auth.users.id`)
+* `fullname`: Student's full name (Text)
+* `course`: Degree program (Text)
+* `year_level`: Academic year level (Text)
+* `tagline`: Short intro/catchphrase (Text)
+* `about`: Full bio description (Text)
+* `skills`: Comma-separated list of technical skills (Text)
+* `avatar`: Profile image source reference or Base64/URL string (Text)
 
 ---
 
-## 6. Image Handling
-* Upon taking a photo, the camera plugin encodes the captured image into a **Base64 `DATA_URL` string**.
-* The application updates the `src` attribute of the `#display-avatar` image element immediately.
-* The Base64 image string is saved into the `student_profile_data` JSON object inside `localStorage`, ensuring the new profile picture persists even after closing or restarting the application.
+## 6. API / Backend Architecture
+
+The Cordova mobile application communicates asynchronously with Supabase via HTTP/REST endpoints handled by the official `@supabase/supabase-js` client SDK.
+
+### Architecture Diagram:
+┌─────────────────────────┐        HTTPS / REST        ┌─────────────────────────┐        SQL        ┌─────────────────────────┐
+│   Cordova Mobile App    │  ───────────────────────►  │   Supabase API / Auth   │  ─────────────► │   PostgreSQL Database   │
+│ (HTML / CSS / JS / SDK) │  ◄───────────────────────  │ (GoTrue / PostgREST API)│  ◄───────────── │   (Profiles Table)      │
+└─────────────────────────┘                            └─────────────────────────┘                 └─────────────────────────┘
+
 
 ---
 
-## 7. Error Handling
-* **Camera Cancellation**: If the user opens the camera and cancels without taking a picture, the application catches the event gracefully, preserves the existing profile picture, and returns to the profile screen without crashing.
-* **Permission Denial / Access Errors**: If camera permissions are denied or hardware is unavailable, an alert message (`Unable to access the camera. Please check your device permissions.`) informs the user without terminating the app.
+## 7. CRUD Operations
+
+The application performs full CRUD operations on the `profiles` table:
+
+* **Create:** Automatically inserts a default student profile record into the database during initial registration or setup using `supabase.from('profiles').insert()`.
+* **Read:** Fetches student details using `supabase.from('profiles').select('*')` upon loading the profile view.
+* **Update:** Updates existing field values using `supabase.from('profiles').upsert(payload)` when saving profile edits.
+* **Delete:** Supports profile resetting or record removal via `supabase.from('profiles').delete()` or dashboard user administration.
 
 ---
 
-## 8. Responsive Design
-The app utilizes CSS Flexbox, Grid, relative units, and media queries to ensure smooth layout adaptations across:
-* **Desktop Monitors**: Wide multi-column card views and top navbar layout.
-* **Tablets**: Adjusted grid gap spacing and fluid container paddings.
-* **Mobile Devices**: Stacked single-column card elements and touch-optimized action buttons.
+## 8. Camera Integration
+
+The camera functionality established in Activity 6 is retained:
+* Tapping the profile picture triggers the file/camera interface (`<input type="file" accept="image/*">` or Cordova Camera Plugin).
+* Selected images are processed using the `FileReader` API into standard Data URLs.
+* The new image immediately updates the DOM `#display-avatar` element and persists across profile updates.
 
 ---
 
-## 9. How to Run
+## 9. Data Persistence
 
-### Prerequisites
-* Node.js & npm installed
-* Apache Cordova CLI installed (`npm install -g cordova`)
+Profile information remains completely persistent across app lifecycles:
+* **Closing / Restarting the App:** Active session tokens and cached profile data stored in `localStorage` ensure details reload instantly without data loss.
+* **Logging Out & In Again:** When logging back in, the app executes a fresh `SELECT` query against Supabase to pull and render the latest persisted database record.
 
-### Setup Steps
+---
+
+## 10. Responsive Design
+
+The application uses flexible CSS layouts (Flexbox and Grid) along with mobile-first media queries to ensure seamless responsiveness across device viewports:
+* **Desktop:** Wide container layout with dual-column profile cards and inline navigation links.
+* **Tablet:** Auto-adjusting padding, scaled font sizes, and flexible card layouts.
+* **Mobile:** Single-column stacked cards, full-width form inputs, and touch-friendly buttons.
+
+---
+
+## 11. Security
+
+Security best practices implemented in this project include:
+* **Password Hashing:** Passwords are never stored in plain text; Supabase Auth automatically hashes credentials using **bcrypt**.
+* **Protected Routes:** JavaScript session checks prevent unauthenticated users from viewing or inspecting secondary HTML pages.
+* **Row Level Security (RLS):** Supabase RLS policies are configured on the database to govern row-level access permissions.
+* **Environment Credential Safety:** Real production secrets and administrative keys are kept out of public repositories.
+
+---
+
+## 12. How to Run
+
+### Prerequisites:
+* **Node.js** & **npm** installed.
+* **Apache Cordova CLI** (`npm install -g cordova`).
+* A modern browser or Android Emulator/Device.
+
+### Steps:
 1. Clone the repository:
    ```bash
    git clone [https://github.com/Galang-GeraldineGalang/Galang_StudentProfile.git](https://github.com/Galang-GeraldineGalang/Galang_StudentProfile.git)

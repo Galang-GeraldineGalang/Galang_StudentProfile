@@ -11,15 +11,16 @@
     <nav class="navbar">
       <div class="nav-brand">Geraldine's Portfolio</div>
       <ul class="nav-links">
-        <li><a href="index.html">Profile</a></li>
-        <li><a href="about.html">About</a></li>
-        <li><a href="skills.html">Skills</a></li>
-        <li><a href="projects.html">Projects</a></li>
-        <li><a href="contact.html" class="active">Contact</a></li>
-      </ul>
+  <li><a href="index.html">Profile</a></li>
+  <li><a href="about.html">About</a></li>
+  <li><a href="skills.html">Skills</a></li>
+  <li><a href="projects.html">Projects</a></li>
+  <li><a href="contact.html">Contact</a></li>
+  <li><a href="#" id="btn-logout-page" style="color: #ffc107; font-weight: bold;">Logout</a></li>
+</ul>
     </nav>
 
-    <main class="container">
+    <main class="container d-none" id="protected-content">
       
       <section class="card">
         <div class="profile-header text-center">
@@ -68,5 +69,34 @@
 
     <script src="cordova.js"></script>
     <script src="js/index.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', async () => {
+        const SUPABASE_URL = 'https://rkgtnmadqwrpmbdqhttd.supabase.co';
+        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJrZ3RubWFkcXdycG1iZHFodHRkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTA0Njk3OTEsImV4cCI6MjEwNjA0NTc5MX0.60H3WjaBHlwmHfrZncDjMMcmC6YPyn_gsTJBkOD4e6U';                    // I-replace sa imong actual Key
+
+        if (window.supabase) {
+          const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+          
+          const { data: { session } } = await supabaseClient.auth.getSession();
+
+          if (!session) {
+            alert('Access Denied! Please log in first.');
+            window.location.href = 'index.html';
+            return;
+          }
+          const btnLogout = document.getElementById('btn-logout-page');
+if (btnLogout) {
+  btnLogout.addEventListener('click', async (e) => {
+    e.preventDefault();
+    if (window.supabase) {
+      await supabaseClient.auth.signOut();
+      window.location.href = 'index.html';
+    }
+  });
+}
+        }
+      });
+    </script>
 </body>
 </html>

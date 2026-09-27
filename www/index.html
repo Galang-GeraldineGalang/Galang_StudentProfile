@@ -5,6 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Geraldine Galang - Student Profile</title>
     <link rel="stylesheet" href="css/index.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        .d-none, .hidden { display: none !important; }
+        
+        .auth-card {
+            max-width: 420px;
+            margin: 40px auto;
+            padding: 25px;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+    </style>
 </head>
 <body>
 
@@ -16,37 +29,57 @@
         <li><a href="skills.html">Skills</a></li>
         <li><a href="projects.html">Projects</a></li>
         <li><a href="contact.html">Contact</a></li>
+        <li><a href="#" id="btn-logout" class="d-none" style="color: #ffc107; font-weight: bold;">Logout</a></li>
       </ul>
     </nav>
 
-    <main class="container">
+    <section id="auth-section" class="auth-card">
+        <h2 style="color: #800000; text-align: center; margin-bottom: 20px; font-weight: bold;">Student Login</h2>
+        
+        <form id="form-login">
+            <div style="margin-bottom: 15px;">
+                <label for="login-email" style="display: block; margin-bottom: 5px; font-weight: 500;">Email Address</label>
+                <input type="email" id="login-email" placeholder="student@xu.edu.ph" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px;">
+            </div>
+            
+            <div style="margin-bottom: 15px;">
+                <label for="login-password" style="display: block; margin-bottom: 5px; font-weight: 500;">Password</label>
+                <input type="password" id="login-password" placeholder="••••••••" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px;">
+            </div>
+
+            <div id="auth-error" class="d-none" style="background-color: #f8d7da; color: #842029; padding: 10px; border-radius: 6px; margin-bottom: 15px; font-size: 0.9rem;"></div>
+
+            <button type="submit" class="btn primary" style="width: 100%; padding: 10px; background-color: #800000; color: white; border: none; border-radius: 6px; font-weight: bold; cursor: pointer;">
+                Login
+            </button>
+        </form>
+    </section>
+
+    <main class="container d-none" id="protected-main">
       <section id="profile-section" class="card">
 
         <div id="profile-view">
           <div class="profile-header text-center">
-          <div class="avatar-container" id="avatar-clickable" style="cursor: pointer; position: relative; display: inline-block;">
-    <img id="display-avatar" src="img/pfp.jpg" alt="Profile Picture" class="profile-img" onerror="this.src='https://via.placeholder.com/150'">
-    <div style="font-size: 0.8rem; color: #666; margin-top: 5px;">(Tap photo to change)</div>
-  </div>
+            <div class="avatar-container" id="avatar-clickable" style="cursor: pointer; position: relative; display: inline-block;">
+              <img id="display-avatar" src="img/pfp.jpg" alt="Profile Picture" class="profile-img" onerror="this.src='https://via.placeholder.com/150'">
+              <div style="font-size: 0.8rem; color: #666; margin-top: 5px;">(Tap photo to change)</div>
+            </div>
 
-  <div style="margin-top: 10px;">
-    <button type="button" id="btn-change-photo" class="btn primary" style="font-size: 0.85rem; padding: 6px 12px;">
-      📷 Change Profile Picture
-    </button>
-  </div>
+            <div style="margin-top: 10px;">
+              <button type="button" id="btn-change-photo" class="btn primary" style="font-size: 0.85rem; padding: 6px 12px;">
+                📷 Change Profile Picture
+              </button>
+            </div>
 
-  <input type="file" id="camera-file-input" accept="image/*" capture="environment" style="display: none;">
-  <script src="cordova.js"></script>
-  <script src="js/index.js"></script>
-</body>
+            <input type="file" id="camera-file-input" accept="image/*" style="display: none;">
 
-  <h1 id="display-fullname" style="margin-top: 15px;">Geraldine Galang</h1>
-  <p class="tagline" id="display-tagline">Aspiring Web Developer & IT Student</p>
-  <p class="subtitle">
-    <span id="display-course">BS Information Technology</span> - 
-    <span id="display-year">3rd Year</span>
-  </p>
-</div>
+            <h1 id="display-fullname" style="margin-top: 15px;">Geraldine Galang</h1>
+            <p class="tagline" id="display-tagline">Aspiring Web Developer & IT Student</p>
+            <p class="subtitle">
+              <span id="display-course">BS Information Technology</span> - 
+              <span id="display-year">3rd Year</span>
+            </p>
+          </div>
 
           <div class="profile-body">
             <div class="info-card">
@@ -56,11 +89,9 @@
               </p>
             </div>
 
-            <!-- SKILLS CONTAINER (Nidugang ta ani para dili mag null error) -->
             <div class="info-card">
               <h3 class="info-card-title">Key Skills</h3>
               <ul id="display-skills" class="skills-tags-list">
-                <!-- Dynamically populated via JSON -->
               </ul>
             </div>
 
@@ -68,7 +99,8 @@
           </div>
         </div>
 
-        <div id="profile-edit" class="hidden">
+        <!-- EDIT PROFILE FORM -->
+        <div id="profile-edit" class="d-none">
           <h2>Edit Profile Information</h2>
           
           <form id="form-edit-profile">
@@ -113,114 +145,6 @@
     </main>
 
     <script src="cordova.js"></script>
-
-
-    <script>
-      document.addEventListener('DOMContentLoaded', () => {
-        const profileView = document.getElementById('profile-view');
-        const profileEdit = document.getElementById('profile-edit');
-        const btnEdit = document.getElementById('btn-edit');
-        const btnCancel = document.getElementById('btn-cancel');
-        const formEdit = document.getElementById('form-edit-profile');
-
-        const displayAvatar = document.getElementById('display-avatar');
-        const displayFullname = document.getElementById('display-fullname');
-        const displayTagline = document.getElementById('display-tagline');
-        const displayCourse = document.getElementById('display-course');
-        const displayYear = document.getElementById('display-year');
-        const displayAbout = document.getElementById('display-about');
-        const displaySkills = document.getElementById('display-skills');
-
-        const inputFullname = document.getElementById('input-fullname');
-        const inputTagline = document.getElementById('input-tagline');
-        const inputCourse = document.getElementById('input-course');
-        const inputYear = document.getElementById('input-year');
-        const inputAbout = document.getElementById('input-about');
-        const inputSkills = document.getElementById('input-skills');
-
-        const defaultProfileJSON = {
-          avatar: "img/pfp.jpg",
-          fullname: "Geraldine Galang",
-          tagline: "Aspiring Web Developer & IT Student",
-          course: "BS Information Technology",
-          year: "3rd Year",
-          about: "I am a 3rd year Information Technology student at Xavier University - Ateneo de Cagayan focusing on web technologies, coding, and cybersecurity. I am also a student-athlete.",
-          skills: ["HTML", "CSS", "JavaScript", "Cybersecurity", "Git"]
-        };
-
-        function loadProfileFromJSON() {
-          const storedJSON = localStorage.getItem('student_profile_data');
-          const data = storedJSON ? JSON.parse(storedJSON) : defaultProfileJSON;
-
-          if (displayAvatar) displayAvatar.src = data.avatar;
-          if (displayFullname) displayFullname.textContent = data.fullname;
-          if (displayTagline) displayTagline.textContent = data.tagline;
-          if (displayCourse) displayCourse.textContent = data.course;
-          if (displayYear) displayYear.textContent = data.year;
-          if (displayAbout) displayAbout.textContent = data.about;
-
-          if (displaySkills) {
-            displaySkills.innerHTML = '';
-            data.skills.forEach(skill => {
-              const li = document.createElement('li');
-              li.textContent = skill.trim();
-              li.style.cssText = 'display:inline-block; background:#800000; color:#fff; padding:4px 10px; margin:3px; border-radius:4px; font-size:0.85rem;';
-              displaySkills.appendChild(li);
-            });
-          }
-        }
-
-        function populateFormFromJSON() {
-          const storedJSON = localStorage.getItem('student_profile_data');
-          const data = storedJSON ? JSON.parse(storedJSON) : defaultProfileJSON;
-
-          if (inputFullname) inputFullname.value = data.fullname;
-          if (inputTagline) inputTagline.value = data.tagline;
-          if (inputCourse) inputCourse.value = data.course;
-          if (inputYear) inputYear.value = data.year;
-          if (inputAbout) inputAbout.value = data.about;
-          if (inputSkills) inputSkills.value = data.skills.join(', ');
-        }
-
-        if (btnEdit) {
-          btnEdit.addEventListener('click', () => {
-            populateFormFromJSON();
-            profileView.classList.add('hidden');
-            profileEdit.classList.remove('hidden');
-          });
-        }
-
-        if (btnCancel) {
-          btnCancel.addEventListener('click', () => {
-            profileEdit.classList.add('hidden');
-            profileView.classList.remove('hidden');
-          });
-        }
-
-        if (formEdit) {
-          formEdit.addEventListener('submit', (e) => {
-            e.preventDefault();
-
-            const updatedProfileJSON = {
-              avatar: "img/pfp.jpg",
-              fullname: inputFullname.value.trim(),
-              tagline: inputTagline.value.trim(),
-              course: inputCourse.value.trim(),
-              year: inputYear.value.trim(),
-              about: inputAbout.value.trim(),
-              skills: inputSkills.value.split(',').map(s => s.trim()).filter(s => s !== '')
-            };
-
-            localStorage.setItem('student_profile_data', JSON.stringify(updatedProfileJSON));
-
-            loadProfileFromJSON();
-            profileEdit.classList.add('hidden');
-            profileView.classList.remove('hidden');
-          });
-        }
-
-        loadProfileFromJSON();
-      });
-    </script>
+    <script src="js/index.js"></script>
 </body>
 </html>
