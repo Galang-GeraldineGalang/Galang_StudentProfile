@@ -142,6 +142,16 @@ Security best practices implemented in this project include:
 * **Apache Cordova CLI** (`npm install -g cordova`).
 * A modern browser or Android Emulator/Device.
 
+## 13. Test Accounts
+
+For demonstration, testing, and grading purposes, please use the following credentials to log in to the application:
+
+| **Role** | **Email / Username** | **Password** | **Status** |
+| :--- | :--- | :--- | :--- |
+| **Student (Test User)** | `geraldine@test.com` | `geraldine123` | Auto-Confirmed / Active |
+
+> **Note:** These credentials were created specifically for project evaluation and do not contain any personal passwords.
+
 ### Steps:
 1. Clone the repository:
    ```bash
